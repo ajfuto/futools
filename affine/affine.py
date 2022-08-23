@@ -1,14 +1,30 @@
+'''
+simple affine cipher encrypter/decrypter
+
+python3 shift.py helloworld e    ->  all 26 encryptions of helloworld
+python3 shift.py mjqqtbtwqi d    ->  all 26 decryptions of mjqqtbtwqi
+python3 shift.py helloworld e 5  ->  encrypts helloworld with shift 5
+python3 shift.py mjqqtbtwqi d 5  ->  decrypts mjqqtbtwqi with shift 5
+'''
+
 import sys
 
+# 'a' must be relatively prime with the size of the alphabet (in this case, 26)
+# all these numbers are relatively prime with 26
 POSSIBLE_A = [1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25]
 
 def main():
     text = sys.argv[1]
+
+    # decrypt
     if sys.argv[2] == 'd':
+        # not enough args, so do all possible
         if len(sys.argv) < 5:
             for a in POSSIBLE_A:
                 for b in range(0, 26):
                     print('[a: {:2d}, b: {:2d}]: {:s}'.format(a, b, affine_decrypt(text, a, b)))
+                    
+        # else, we have enough args, so use the specified 'a' and 'b' values
         else:
             a = int(sys.argv[3])
             b = int(sys.argv[4])
@@ -18,11 +34,15 @@ def main():
                 exit()
             print('[a: {:2d}, b: {:2d}]: {:s}'.format(a, b, affine_decrypt(text, a, b)))
 
+    # encrypt
     elif sys.argv[2] == 'e':
+        # not enough args, so do all possible
         if len(sys.argv) < 5:
             for a in POSSIBLE_A:
                 for b in range(0, 26):
                     print('[a: {:2d}, b: {:2d}]: {:s}'.format(a, b, affine_encrypt(text, a, b)))
+
+        # else, we have enough args, so use the specified 'a' and 'b' values
         else:
             a = int(sys.argv[3])
             b = int(sys.argv[4])
@@ -32,7 +52,7 @@ def main():
                 exit()
             print('[a: {:2d}, b: {:2d}]: {:s}'.format(a, b, affine_encrypt(text, a, b)))
 
-
+# Euclid's GCD algorithm
 def egcd(a, b):
     if a == 0:
         return (b, 0, 1)
@@ -40,7 +60,7 @@ def egcd(a, b):
         g, y, x = egcd(b % a, a)
         return (g, x - (b // a) * y, y)
     
-
+# modular inverse
 def mod_inv(a, m):
     return pow(a, -1, m)
 
