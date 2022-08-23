@@ -25,9 +25,9 @@ def main():
         print(shift(plaintext, coeff * (shift%26)))
     else:
         for i in range(0, 26):
-            print("{:2d}: {:s}".format(i, shift(plaintext, coeff * i))) 
+            print("{:2d}: {:s}".format(i, shift_cipher(plaintext, coeff * i))) 
 
-def shift(plain, shift):
+def shift_cipher(plain, shift):
     plain = plain.lower()
     shifted = string.ascii_lowercase[shift:] + string.ascii_lowercase[:shift]
     mapping_table = str.maketrans(string.ascii_lowercase, shifted)
