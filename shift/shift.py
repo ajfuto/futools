@@ -22,7 +22,7 @@ def main():
 
     if len(sys.argv) > 3:
         shift = int(sys.argv[3])
-        print(shift(plaintext, coeff * (shift%26)))
+        print(shift_cipher(plaintext, coeff * (shift%26)))
     else:
         for i in range(0, 26):
             print("{:2d}: {:s}".format(i, shift_cipher(plaintext, coeff * i))) 
