@@ -52,26 +52,18 @@ def main():
                 exit()
             print('[a: {:2d}, b: {:2d}]: {:s}'.format(a, b, affine_encrypt(text, a, b)))
 
-# Euclid's GCD algorithm
-def egcd(a, b):
-    if a == 0:
-        return (b, 0, 1)
-    else:
-        g, y, x = egcd(b % a, a)
-        return (g, x - (b // a) * y, y)
-    
 # modular inverse
 def mod_inv(a, m):
     return pow(a, -1, m)
 
-
+# encrypts plaintext with keys a and b
 def affine_encrypt(plain, a, b):
     plain = plain.lower().replace(' ', '')
     
     # E(x) = (ax + b) % 26
     return ''.join([ chr(((a * (ord(c) - ord('a')) + b) % 26) + ord('a')) for c in plain])
 
-
+# decrypts ciphertext with keys a and b
 def affine_decrypt(cipher, a, b):
     cipher = cipher.lower()
 
